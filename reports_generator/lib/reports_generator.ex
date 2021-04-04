@@ -2,7 +2,7 @@ defmodule ReportsGenerator do
   def build(filename) do
     "reports/#{filename}"
     |> File.stream!()
-    |> Enum.each(fn line -> parse_line(line) end)
+    |> Enum.map(fn line -> parse_line(line) end)
   end
 
   defp parse_line(line) do
@@ -10,6 +10,5 @@ defmodule ReportsGenerator do
     |> String.trim()
     |> String.split(",")
     |> List.update_at(2, &String.to_integer/1)
-    |> IO.inspect()
   end
 end
