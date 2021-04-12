@@ -18,9 +18,9 @@ defmodule ReportsGenerator do
     |> Enum.reduce(report_acc(), &sum_values/2)
   end
 
-  def fetch_higher_cost(report), do: Enum.max_by(report, fn {_key, value} -> value end)
+  def fetch_higher_cost(report, option), do: Enum.max_by(report[option], fn {_key, value} -> value end)
 
-  defp sum_values([id, food_name, price], %{"foods" => foods, "users" => users = report}) do
+  defp sum_values([id, food_name, price], %{"foods" => foods, "users" => users } = report) do
     users = Map.put(users, id, users[id] + price)
     foods = Map.put(foods, food_name, foods[food_name] + 1)
     %{report | "users" => users, "foods" => foods}
